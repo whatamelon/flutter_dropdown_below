@@ -4,6 +4,9 @@
 A Flutter Dropdown library which is customize flutter dropdownbutton widget.
 
 
+![](test1.gif)
+
+
 ## Options
 
 | options | description |required|
@@ -83,3 +86,43 @@ Dropdown Widget.
 	      onChanged: onChangeDropdownTests,
 	    ),
 
+
+<br/>
+
+
+### 5. Question
+
+1. IF you want to change size the parent box's size?
+Than, why don't you wrap the DropdownBelow widget with Container.
+
+
+2. IF you want to make itemBox dropdown when you enter the page?
+
+Put this code to initState like this.
+
+`
+Timer(Duration(milliseconds: 200), () {
+    CustomDropdownButtonState state = dropdownKey1.currentState;
+    state.callTap();
+});
+`
+
+And put key to Widget like this.
+
+`
+DropdownBelow(
+  key: dropdownKey1,
+  itemWidth: 200,
+  itemTextstyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
+  boxTextstyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0XFFbbbbbb)),
+  boxPadding: EdgeInsets.fromLTRB(13, 12, 0, 12),
+  boxHeight: 45,
+  hint: Text('choose item'),
+  value: _selectedTest,
+  items: _dropdownTestItems,
+  onChanged: onChangeDropdownTests,
+),
+
+Actually, dropdown widget is made by Navigation. So, it can work.
+
+ 	    `
