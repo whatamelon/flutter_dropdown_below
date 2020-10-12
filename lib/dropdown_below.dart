@@ -376,6 +376,7 @@ class DropdownBelow<T> extends StatefulWidget {
     this.itemTextstyle,
     this.itemWidth,
     this.boxHeight,
+    this.boxWidth,
     this.boxPadding,
     this.boxTextstyle,
     @required this.onChanged,
@@ -395,6 +396,8 @@ class DropdownBelow<T> extends StatefulWidget {
   final double itemWidth;
 
   final double boxHeight;
+
+  final double boxWidth;
 
   final EdgeInsetsGeometry boxPadding;
 
@@ -519,6 +522,7 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
           borderRadius: BorderRadius.all(Radius.circular(5)),
           color: Colors.white,
         ),
+        width: widget.boxWidth,
         padding: widget.boxPadding,
         height: widget.boxHeight,
         child: new Row(
