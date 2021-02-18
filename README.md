@@ -8,7 +8,7 @@
 ![license](https://img.shields.io/pub/v/dropdown_below?color=green&include_prereleases&style=flat-square)
 
 
-<img src="https://github.com/whatamelon/flutter_dropdown_below/blob/master/test1.gif" width="300" height="650">
+<img src="https://raw.githubusercontent.com/whatamelon/flutter_dropdown_below/master/test1.gif" width="300" height="650">
 
 
 ## Options

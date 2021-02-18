@@ -5,15 +5,25 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 const Duration _kDropdownMenuDuration = Duration(milliseconds: 300);
+/// *[_kDropdownMenuDuration] which is dropdown button's drop down duration.
+
+
 const double _kMenuItemHeight = 48.0;
-const double _kDenseButtonHeight = 24.0;
+/// *[_kMenuItemHeight] which is dropdown item's default height
+
+
 const EdgeInsets _kMenuItemPadding = EdgeInsets.symmetric(horizontal: 16.0);
-const EdgeInsetsGeometry _kAlignedButtonPadding =
-EdgeInsetsDirectional.only(start: 16.0, end: 4.0);
-const EdgeInsets _kUnalignedButtonPadding = EdgeInsets.zero;
+/// *[_kMenuItemPadding] which is dropdown item's default padding.
+
+
 const EdgeInsets _kAlignedMenuMargin = EdgeInsets.zero;
+/// *[_kAlignedMenuMargin] which is dropdown item's default margin
+
 const EdgeInsetsGeometry _kUnalignedMenuMargin =
 EdgeInsetsDirectional.only(start: 16.0, end: 24.0);
+/// *[_kAlignedMenuMargin] which is dropdown item's default margin for align rule.
+
+
 
 class _DropdownMenuPainter extends CustomPainter {
   _DropdownMenuPainter({
@@ -29,11 +39,21 @@ class _DropdownMenuPainter extends CustomPainter {
         super(repaint: resize);
 
   final Color color;
+  /// *[color] which is dropdown item's background color
+
   final int elevation;
+  /// *[elevation] which is dropdown whole item list's elevation
+
   final int selectedIndex;
+  /// *[selectedIndex] which is selected item's index
+
+
   final Animation<double> resize;
+  /// *[resize] which is resized animation value
 
   final BoxPainter _painter;
+  /// *[_painter] which is panting value
+
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -92,7 +112,14 @@ class _DropdownMenu<T> extends StatefulWidget {
   }) : super(key: key);
 
   final _DropdownRoute<T> route;
-  final EdgeInsets padding;
+  /// flutter's dropdown is same as go to new route.
+  /// So *[route] means setting new route
+
+
+
+  final EdgeInsets padding; /// padding.
+
+
 
   @override
   _DropdownMenuState<T> createState() => new _DropdownMenuState<T>();
@@ -196,7 +223,11 @@ class _DropdownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
   });
 
   final double itemWidth;
+  /// dropdown button's each item's width
+
   final Rect buttonRect;
+  /// dropdown button's whole list rect.
+
   final double menuTop;
   final double menuHeight;
   final TextDirection textDirection;
@@ -275,9 +306,16 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
   }) : assert(style != null);
 
   final List<DropdownMenuItem<T>> items;
+  /// item's list
+
   final EdgeInsetsGeometry padding;
+
   final Rect buttonRect;
+  /// buttons rectangle
+
   final int selectedIndex;
+  /// selected Index
+
   final int elevation;
   final ThemeData theme;
   final TextStyle style;
@@ -391,24 +429,42 @@ class DropdownBelow<T> extends StatefulWidget {
           1),
         super(key: key);
   final List<DropdownMenuItem<T>> items;
+  /// item list
+
   final T value;
+  /// printed value
 
   final double itemWidth;
+  /// each item width
 
   final double boxHeight;
+  /// whole box height
 
   final double boxWidth;
+  /// whole box width
 
   final EdgeInsetsGeometry boxPadding;
+  /// default box padding
 
   final TextStyle boxTextstyle;
+  /// default box text style
+
   final TextStyle itemTextstyle;
+  /// default each item's text style
+
   final Widget hint;
+  /// default value that printed which has no touch to dropdown widget.
+
   final ValueChanged<T> onChanged;
+  /// click item then, function triggered
+
   final int elevation;
   final TextStyle style;
   final double iconSize;
+  /// if you use icon this value designate icon size
+
   final bool isDense;
+
 
   @override
   _DropdownBelowState<T> createState() => new _DropdownBelowState<T>();
@@ -465,7 +521,7 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
   }
 
   TextStyle get _textStyle =>
-      widget.style ?? Theme.of(context).textTheme.subhead;
+      widget.style ?? Theme.of(context).textTheme.subtitle1;
 
   void _handleTap() {
     final RenderBox itemBox = context.findRenderObject();
@@ -484,7 +540,7 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
       padding: _kMenuItemPadding.resolve(textDirection),
       selectedIndex: -1,
       elevation: widget.elevation,
-      theme: Theme.of(context, shadowThemeOnly: true),
+      theme: Theme.of(context),
       style: _textStyle,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     );
