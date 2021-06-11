@@ -1,10 +1,10 @@
 name: dropdown_below
 description: flutter custom dropdown box. Develeoper can customize many options for there taste. It can be huge advantage for dropdown ux
-version: 0.0.6
+version: 0.0.8
 homepage: https://github.com/whatamelon/flutter_dropdown_below
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:

@@ -1,4 +1,4 @@
-import 'package:dropdown_below/dropdown_below.dart';
+import 'package:example/dropdownBelowTest.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,23 +14,24 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  List _testList = [{'no': 1, 'keyword': 'blue'},{'no': 2, 'keyword': 'black'},{'no': 3, 'keyword': 'red'}];
-  List<DropdownMenuItem> _dropdownTestItems;
+  List _testList = [
+    {'no': 1, 'keyword': 'blue'},
+    {'no': 2, 'keyword': 'black'},
+    {'no': 3, 'keyword': 'red'}
+  ];
+  List<DropdownMenuItem<Object?>> _dropdownTestItems = [];
   var _selectedTest;
 
   @override
@@ -44,8 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  List<DropdownMenuItem> buildDropdownTestItems(List _testList) {
-    List<DropdownMenuItem> items = List();
+  List<DropdownMenuItem<Object?>> buildDropdownTestItems(List _testList) {
+    List<DropdownMenuItem<Object?>> items = [];
     for (var i in _testList) {
       items.add(
         DropdownMenuItem(
@@ -76,8 +77,14 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             DropdownBelow(
               itemWidth: 200,
-              itemTextstyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
-              boxTextstyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0XFFbbbbbb)),
+              itemTextstyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black),
+              boxTextstyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0XFFbbbbbb)),
               boxPadding: EdgeInsets.fromLTRB(13, 12, 0, 12),
               boxWidth: 200,
               boxHeight: 45,

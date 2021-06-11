@@ -7,24 +7,28 @@
 ![license](https://img.shields.io/github/languages/top/whatamelon/flutter_dropdown_below?color=blue&style=flat-square)
 ![license](https://img.shields.io/pub/v/dropdown_below?color=green&include_prereleases&style=flat-square)
 
+###[pub.dev link!](https://pub.dev/packages/dropdown_below)
 
 <img src="https://raw.githubusercontent.com/whatamelon/flutter_dropdown_below/master/test1.gif" width="300" height="650">
 
 
 ## Options
 
-| options | description |required|
-|---|---|---
-itemWidth |dropdown item's box width|X
-itemTextstyle |dropdown item's text style|X
-boxTextstyle |seletced box text style|X
-boxPadding |seletced box inner padding|X
-boxHeight | seletced box height|X
-boxWidth | seletced box width|X
-hint |text before you choose item|X
-value |selected item|X
-items | itemsList |O
-onChange |change item function|O
+| options | description |type|required|
+|---|---|---|---
+itemWidth |dropdown item's box width|double|X
+itemTextstyle |dropdown item's text style|double|X
+boxTextstyle |seletced box text style|TextStyle|X
+boxPadding |seletced box inner padding|EdgeInsetsGeometry|X
+boxHeight | seletced box height|double|X
+boxWidth | seletced box width|double|X
+hint |text before you choose item|Widget|X
+value |selected item|T|X
+boxDecoration |box's border, borderRadius, color|BoxDecoration|X
+icon |widget which is right beside|Widget|X
+items | itemsList |List<DropdownMenuItem<T>>|O
+onChange |change item function|ValueChanged<T>|O
+
 
 
 ## How to make it Work?

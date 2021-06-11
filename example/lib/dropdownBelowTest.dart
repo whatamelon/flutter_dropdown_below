@@ -1,4 +1,3 @@
-library dropdown_below;
 
 import 'dart:math' as math;
 
@@ -21,7 +20,7 @@ const EdgeInsets _kAlignedMenuMargin = EdgeInsets.zero;
 /// *[_kAlignedMenuMargin] which is dropdown item's default margin
 
 const EdgeInsetsGeometry _kUnalignedMenuMargin =
-    EdgeInsetsDirectional.only(start: 16.0, end: 24.0);
+EdgeInsetsDirectional.only(start: 16.0, end: 24.0);
 
 /// *[_kAlignedMenuMargin] which is dropdown item's default margin for align rule.
 
@@ -32,10 +31,10 @@ class _DropdownMenuPainter extends CustomPainter {
     this.selectedIndex,
     this.resize,
   })  : _painter = new BoxDecoration(
-                color: Colors.white,
-                borderRadius: new BorderRadius.circular(5),
-                boxShadow: kElevationToShadow[elevation!])
-            .createBoxPainter(),
+      color: Colors.white,
+      borderRadius: new BorderRadius.circular(5),
+      boxShadow: kElevationToShadow[elevation!])
+      .createBoxPainter(),
         super(repaint: resize);
 
   final Color? color;
@@ -69,7 +68,7 @@ class _DropdownMenuPainter extends CustomPainter {
 
     final Tween<double> bottom = new Tween<double>(
       begin:
-          (top.begin! + _kMenuItemHeight).clamp(_kMenuItemHeight, size.height),
+      (top.begin! + _kMenuItemHeight).clamp(_kMenuItemHeight, size.height),
       end: size.height,
     );
 
@@ -98,7 +97,7 @@ class _DropdownScrollBehavior extends ScrollBehavior {
 
   @override
   Widget buildViewportChrome(
-          BuildContext context, Widget child, AxisDirection axisDirection) =>
+      BuildContext context, Widget child, AxisDirection axisDirection) =>
       child;
 
   @override
@@ -148,7 +147,7 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
   @override
   Widget build(BuildContext context) {
     final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
+    MaterialLocalizations.of(context);
     final _DropdownRoute<T> route = widget.route!;
     final double unit = 0.5 / (route.items!.length + 1.5);
     final List<Widget> children = <Widget>[];
@@ -238,7 +237,7 @@ class _DropdownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
     final double maxHeight =
-        math.max(0.0, constraints.maxHeight - 2 * _kMenuItemHeight);
+    math.max(0.0, constraints.maxHeight - 2 * _kMenuItemHeight);
     return new BoxConstraints(
       minWidth: itemWidth!,
       maxWidth: itemWidth!,
@@ -372,7 +371,7 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
       if (preferredMenuHeight > maxMenuHeight)
         scrollOffset = selectedItemOffset - (buttonTop - menuTop);
       scrollController =
-          new ScrollController(initialScrollOffset: scrollOffset);
+      new ScrollController(initialScrollOffset: scrollOffset);
     }
 
     final TextDirection textDirection = Directionality.of(context);
@@ -525,8 +524,8 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
   void _updateSelectedIndex() {
     assert(widget.value == null ||
         widget.items
-                .where((DropdownMenuItem<T> item) => item.value == widget.value)
-                .length ==
+            .where((DropdownMenuItem<T> item) => item.value == widget.value)
+            .length ==
             1);
     _selectedIndex = null;
     for (int itemIndex = 0; itemIndex < widget.items.length; itemIndex++) {
@@ -545,9 +544,9 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
     final Rect itemRect = itemBox.localToGlobal(Offset.zero) & itemBox.size;
     final TextDirection textDirection = Directionality.of(context);
     final EdgeInsetsGeometry menuMargin =
-        ButtonTheme.of(context).alignedDropdown
-            ? _kAlignedMenuMargin
-            : _kUnalignedMenuMargin;
+    ButtonTheme.of(context).alignedDropdown
+        ? _kAlignedMenuMargin
+        : _kUnalignedMenuMargin;
 
     assert(_dropdownRoute == null);
     _dropdownRoute = new _DropdownRoute<T>(

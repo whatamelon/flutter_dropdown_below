@@ -1,3 +1,16 @@
+
+## [0.0.8] - 2021-06-11
+
+* Support change boxDecoration, right side icon
+* now right side Icon is not required widget. You can customize it whatever.
+
+
+## [0.0.7] - 2021-03-12
+
+* Flutter2 Null Safety migrate
+* Reformat with dartfmt -w .
+
+
 ## [0.0.6] - 2021-02-18
 
 * fixed issue : shadowThemeOnly not founded #1
