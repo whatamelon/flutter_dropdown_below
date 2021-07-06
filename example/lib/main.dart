@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -72,29 +71,34 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('dropdown below example'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            DropdownBelow(
-              itemWidth: 200,
-              itemTextstyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black),
-              boxTextstyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0XFFbbbbbb)),
-              boxPadding: EdgeInsets.fromLTRB(13, 12, 0, 12),
-              boxWidth: 200,
-              boxHeight: 45,
-              hint: Text('choose item'),
-              value: _selectedTest,
-              items: _dropdownTestItems,
-              onChanged: onChangeDropdownTests,
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              DropdownBelow(
+                itemWidth: 100,
+                itemTextstyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black),
+                boxTextstyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0XFFbbbbbb)),
+                boxPadding: const EdgeInsets.fromLTRB(13, 12, 0, 12),
+                boxWidth: 100,
+                boxHeight: 45,
+                hint: Text('Filter'),
+                value: _selectedTest,
+                items: _dropdownTestItems,
+                onChanged: onChangeDropdownTests,
+              ),
+            ],
+          ),
         ),
+
+
       ),
     );
   }

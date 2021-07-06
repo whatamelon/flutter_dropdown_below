@@ -1,4 +1,10 @@
 
+## [0.0.9] - 2021-07-06
+
+* Fix issue https://github.com/whatamelon/flutter_dropdown_below/issues/3#issue-935545330
+* Reformat with dartfmt -w .
+
+
 ## [0.0.8] - 2021-06-11
 
 * Support change boxDecoration, right side icon

@@ -7,7 +7,6 @@
 ![license](https://img.shields.io/github/languages/top/whatamelon/flutter_dropdown_below?color=blue&style=flat-square)
 ![license](https://img.shields.io/pub/v/dropdown_below?color=green&include_prereleases&style=flat-square)
 
-###[pub.dev link!](https://pub.dev/packages/dropdown_below)
 
 <img src="https://raw.githubusercontent.com/whatamelon/flutter_dropdown_below/master/test1.gif" width="300" height="650">
 
