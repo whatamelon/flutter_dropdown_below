@@ -67,39 +67,31 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('dropdown below example'),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              DropdownBelow(
-                itemWidth: 100,
-                itemTextstyle: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black),
-                boxTextstyle: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0XFFbbbbbb)),
-                boxPadding: const EdgeInsets.fromLTRB(13, 12, 0, 12),
-                boxWidth: 100,
-                boxHeight: 45,
-                hint: Text('Filter'),
-                value: _selectedTest,
-                items: _dropdownTestItems,
-                onChanged: onChangeDropdownTests,
-              ),
-            ],
-          ),
+        backgroundColor: Colors.black12,
+        appBar: AppBar(
+          title: Text('dropdown below example'),
         ),
-
-
-      ),
-    );
+        body: Center(
+            child: DropdownBelow(
+          itemWidth: 100,
+          itemTextstyle: TextStyle(
+              fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
+          boxTextstyle: TextStyle(
+              fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white54),
+          boxPadding: EdgeInsets.fromLTRB(13, 12, 13, 12),
+          boxWidth: 100,
+          boxHeight: 45,
+          boxDecoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(width: 1, color: Colors.white54)),
+          icon: Icon(
+            Icons.settings,
+            color: Colors.white54,
+          ),
+          hint: Text('Filter'),
+          value: _selectedTest,
+          items: _dropdownTestItems,
+          onChanged: onChangeDropdownTests,
+        )));
   }
 }

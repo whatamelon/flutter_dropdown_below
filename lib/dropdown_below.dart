@@ -76,8 +76,7 @@ class _DropdownMenuPainter extends CustomPainter {
     final Rect rect = Rect.fromLTRB(
         0.0, top.evaluate(resize!), size.width, bottom.evaluate(resize!));
 
-    _painter.paint(
-        canvas, rect.topLeft, ImageConfiguration(size: rect.size));
+    _painter.paint(canvas, rect.topLeft, ImageConfiguration(size: rect.size));
   }
 
   @override
@@ -115,12 +114,7 @@ class _DropdownMenu<T> extends StatefulWidget {
 
   final _DropdownRoute<T>? route;
 
-  /// flutter's dropdown is same as go to new route.
-  /// So *[route] means setting new route
-
   final EdgeInsets? padding;
-
-  /// padding.
 
   @override
   _DropdownMenuState<T> createState() => _DropdownMenuState<T>();
@@ -155,15 +149,15 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
     for (int itemIndex = 0; itemIndex < route.items!.length; ++itemIndex) {
       CurvedAnimation opacity;
       if (itemIndex == route.selectedIndex) {
-        opacity = CurvedAnimation(
-            parent: route.animation!, curve: Threshold(0.0));
+        opacity =
+            CurvedAnimation(parent: route.animation!, curve: Threshold(0.0));
       } else {
         final double start = (0.5 + (itemIndex + 1) * unit).clamp(0.0, 1.0);
         final double end = (start + 1.5 * unit).clamp(0.0, 1.0);
         opacity = CurvedAnimation(
             parent: route.animation!, curve: Interval(start, end));
       }
-      children.add( FadeTransition(
+      children.add(FadeTransition(
         opacity: opacity,
         child: InkWell(
           child: Container(
@@ -257,7 +251,6 @@ class _DropdownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
       }
       return true;
     }());
-    assert(textDirection != null);
     late double left;
     switch (textDirection) {
       case TextDirection.rtl:
@@ -303,10 +296,9 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
     this.buttonRect,
     this.selectedIndex,
     this.elevation = 8,
-    this.theme,
     required this.style,
     this.barrierLabel,
-  }) : assert(style != null);
+  });
 
   final List<DropdownMenuItem<T>>? items;
 
@@ -323,7 +315,7 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
   /// selected Index
 
   final int elevation;
-  final ThemeData? theme;
+
   final TextStyle style;
 
   ScrollController? scrollController;
@@ -381,8 +373,6 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
       padding: padding!.resolve(textDirection),
     );
 
-    if (theme != null) menu = Theme(data: theme!, child: menu);
-
     return new MediaQuery.removePadding(
       context: context,
       removeTop: true,
@@ -426,7 +416,6 @@ class DropdownBelow<T> extends StatefulWidget {
       required this.onChanged,
       this.boxDecoration,
       this.elevation = 8,
-      this.style,
       this.isDense = false,
       this.icon})
       : assert(value == null ||
@@ -481,7 +470,6 @@ class DropdownBelow<T> extends StatefulWidget {
   /// box decoration like border, borderRadius, color
 
   final int elevation;
-  final TextStyle? style;
 
   final Widget? icon;
 
@@ -499,7 +487,6 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
   @override
   void initState() {
     super.initState();
-//    _updateSelectedIndex();
     WidgetsBinding.instance!.addObserver(this);
   }
 
@@ -541,9 +528,6 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
     }
   }
 
-  TextStyle? get _textStyle =>
-      widget.style ?? Theme.of(context).textTheme.subtitle1;
-
   void _handleTap() {
     final RenderBox itemBox = context.findRenderObject() as RenderBox;
     final Rect itemRect = itemBox.localToGlobal(Offset.zero) & itemBox.size;
@@ -561,8 +545,7 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
       padding: _kMenuItemPadding.resolve(textDirection),
       selectedIndex: -1,
       elevation: widget.elevation,
-      theme: Theme.of(context),
-      style: _textStyle!,
+      style: widget.itemTextstyle ?? TextStyle(),
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     );
 
@@ -578,11 +561,11 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
 
-    final List<Widget> items =  List<Widget>.from(widget.items);
+    final List<Widget> items = List<Widget>.from(widget.items);
     int? hintIndex;
     if (widget.hint != null) {
       hintIndex = items.length;
-      items.add( DefaultTextStyle(
+      items.add(DefaultTextStyle(
         style: widget.boxTextstyle!,
         child: IgnorePointer(
           child: widget.hint,

@@ -1,3 +1,7 @@
+## [1.0.0] - 2021-07-28
+
+* Fix issue https://github.com/whatamelon/flutter_dropdown_below/issues/4#issue-953987467
+* Reformat with dartfmt -w .
 
 ## [0.0.9] - 2021-07-06
 
