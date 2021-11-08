@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 library dropdown_below;
 
 import 'dart:math' as math;
@@ -32,7 +34,7 @@ class _DropdownMenuPainter extends CustomPainter {
     this.selectedIndex,
     this.resize,
   })  : _painter = BoxDecoration(
-                color: Colors.white,
+                color: color,
                 borderRadius: BorderRadius.circular(5),
                 boxShadow: kElevationToShadow[elevation!])
             .createBoxPainter(),
@@ -109,12 +111,14 @@ class _DropdownMenu<T> extends StatefulWidget {
   const _DropdownMenu({
     Key? key,
     this.padding,
+    this.dropdownColor,
     this.route,
   }) : super(key: key);
 
   final _DropdownRoute<T>? route;
 
   final EdgeInsets? padding;
+  final Color? dropdownColor;
 
   @override
   _DropdownMenuState<T> createState() => _DropdownMenuState<T>();
@@ -176,7 +180,7 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
       opacity: _fadeOpacity,
       child: CustomPaint(
         painter: _DropdownMenuPainter(
-          color: Colors.white,
+          color: widget.dropdownColor ?? Colors.white,
           elevation: 2,
           selectedIndex: route.selectedIndex,
           resize: _resize,
@@ -233,7 +237,7 @@ class _DropdownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
     final double maxHeight =
         math.max(0.0, constraints.maxHeight - 2 * _kMenuItemHeight);
-    return new BoxConstraints(
+    return BoxConstraints(
       minWidth: itemWidth!,
       maxWidth: itemWidth!,
       minHeight: 0.0,
@@ -260,7 +264,7 @@ class _DropdownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
         left = buttonRect!.left.clamp(0.0, size.width - childSize.width);
         break;
     }
-    return new Offset(left + 15, menuTop + 13);
+    return Offset(left + 15, menuTop + 13);
   }
 
   @override
@@ -295,6 +299,7 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
     this.padding,
     this.buttonRect,
     this.selectedIndex,
+    this.dropdownColor,
     this.elevation = 8,
     required this.style,
     this.barrierLabel,
@@ -317,6 +322,7 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
   final int elevation;
 
   final TextStyle style;
+  final Color? dropdownColor;
 
   ScrollController? scrollController;
 
@@ -350,8 +356,9 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
     double menuTop = (buttonTop - selectedItemOffset) -
         (_kMenuItemHeight - buttonRect!.height) / 2.0;
     const double topPreferredLimit = _kMenuItemHeight;
-    if (menuTop < topPreferredLimit)
+    if (menuTop < topPreferredLimit) {
       menuTop = math.min(buttonTop, topPreferredLimit);
+    }
     double bottom = menuTop + menuHeight;
     final double bottomPreferredLimit = screenHeight - _kMenuItemHeight;
     if (bottom > bottomPreferredLimit) {
@@ -361,19 +368,20 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
 
     if (scrollController == null) {
       double scrollOffset = 0.0;
-      if (preferredMenuHeight > maxMenuHeight)
+      if (preferredMenuHeight > maxMenuHeight) {
         scrollOffset = selectedItemOffset - (buttonTop - menuTop);
-      scrollController =
-          new ScrollController(initialScrollOffset: scrollOffset);
+      }
+      scrollController = ScrollController(initialScrollOffset: scrollOffset);
     }
 
     final TextDirection textDirection = Directionality.of(context);
     Widget menu = _DropdownMenu<T>(
       route: this,
       padding: padding!.resolve(textDirection),
+      dropdownColor: dropdownColor,
     );
 
-    return new MediaQuery.removePadding(
+    return MediaQuery.removePadding(
       context: context,
       removeTop: true,
       removeBottom: true,
@@ -415,6 +423,7 @@ class DropdownBelow<T> extends StatefulWidget {
       this.boxTextstyle,
       required this.onChanged,
       this.boxDecoration,
+      this.dropdownColor,
       this.elevation = 8,
       this.isDense = false,
       this.icon})
@@ -475,8 +484,14 @@ class DropdownBelow<T> extends StatefulWidget {
 
   final bool isDense;
 
+  /// The background color of the dropdown.
+  ///
+  /// If it is not provided, the theme's [Colors.white] will be used
+  /// instead.
+  final Color? dropdownColor;
+
   @override
-  _DropdownBelowState<T> createState() => new _DropdownBelowState<T>();
+  _DropdownBelowState<T> createState() => _DropdownBelowState<T>();
 }
 
 class _DropdownBelowState<T> extends State<DropdownBelow<T>>
@@ -538,13 +553,14 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
             : _kUnalignedMenuMargin;
 
     assert(_dropdownRoute == null);
-    _dropdownRoute = new _DropdownRoute<T>(
+    _dropdownRoute = _DropdownRoute<T>(
       itemWidth: widget.itemWidth,
       items: widget.items,
       buttonRect: menuMargin.resolve(textDirection).inflateRect(itemRect),
       padding: _kMenuItemPadding.resolve(textDirection),
       selectedIndex: -1,
       elevation: widget.elevation,
+      dropdownColor: widget.dropdownColor,
       style: widget.itemTextstyle ?? TextStyle(),
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     );
@@ -553,7 +569,7 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
         .then<void>((_DropdownRouteResult<T>? newValue) {
       _dropdownRoute = null;
       if (!mounted || newValue == null) return;
-      if (widget.onChanged != null) widget.onChanged(newValue.result);
+      widget.onChanged(newValue.result);
     });
   }
 
@@ -574,9 +590,9 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
       ));
     }
 
-    Widget result = new DefaultTextStyle(
+    Widget result = DefaultTextStyle(
       style: widget.boxTextstyle!,
-      child: new Container(
+      child: Container(
         decoration: widget.boxDecoration,
         width: widget.boxWidth,
         padding: widget.boxPadding,
@@ -620,7 +636,7 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
       );
     }
 
-    return new Semantics(
+    return Semantics(
       button: true,
       child: GestureDetector(
           onTap: _handleTap, behavior: HitTestBehavior.opaque, child: result),
