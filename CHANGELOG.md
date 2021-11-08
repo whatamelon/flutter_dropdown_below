@@ -1,3 +1,8 @@
+## [1.0.1] - 2021-11-08
+
+* Fix issue https://github.com/whatamelon/flutter_dropdown_below/issues/5
+* Pull request https://github.com/whatamelon/flutter_dropdown_below/pull/8 this commit solving https://github.com/whatamelon/flutter_dropdown_below/issues/7 this issue by @darker-dubai
+
 ## [1.0.0] - 2021-07-28
 
 * Fix issue https://github.com/whatamelon/flutter_dropdown_below/issues/4#issue-953987467

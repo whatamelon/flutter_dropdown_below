@@ -514,7 +514,7 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
 
   @override
   void didChangeMetrics() {
-    _removeDropdownRoute();
+    // _removeDropdownRoute();
   }
 
   void _removeDropdownRoute() {

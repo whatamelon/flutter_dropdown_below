@@ -72,26 +72,43 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text('dropdown below example'),
         ),
         body: Center(
-            child: DropdownBelow(
-          itemWidth: 100,
-          itemTextstyle: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
-          boxTextstyle: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white54),
-          boxPadding: EdgeInsets.fromLTRB(13, 12, 13, 12),
-          boxWidth: 100,
-          boxHeight: 45,
-          boxDecoration: BoxDecoration(
-              color: Colors.transparent,
-              border: Border.all(width: 1, color: Colors.white54)),
-          icon: Icon(
-            Icons.settings,
-            color: Colors.white54,
-          ),
-          hint: Text('Filter'),
-          value: _selectedTest,
-          items: _dropdownTestItems,
-          onChanged: onChangeDropdownTests,
-        )));
+            child: Column(
+              children: [
+                DropdownBelow(
+                  itemWidth: 100,
+                  itemTextstyle: TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
+                  boxTextstyle: TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white54),
+                  boxPadding: EdgeInsets.fromLTRB(13, 12, 13, 12),
+                  boxWidth: 100,
+                  boxHeight: 45,
+                  boxDecoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border.all(width: 1, color: Colors.white54)),
+                  icon: Icon(
+                        Icons.settings,
+                        color: Colors.white54,
+                  ),
+                  hint: Text('Filter'),
+                  value: _selectedTest,
+                  items: _dropdownTestItems,
+                  onChanged: onChangeDropdownTests,
+                ),
+                TextField(),
+                ElevatedButton(
+                    onPressed: () {
+
+                      FocusScopeNode currentFocus = FocusScope.of(context);
+
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
+                    },
+                child: Text('focus out button'))
+              ],
+            )
+        )
+    );
   }
 }
