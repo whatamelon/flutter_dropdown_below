@@ -22,8 +22,7 @@ const EdgeInsets _kAlignedMenuMargin = EdgeInsets.zero;
 
 /// *[_kAlignedMenuMargin] which is dropdown item's default margin
 
-const EdgeInsetsGeometry _kUnalignedMenuMargin =
-    EdgeInsetsDirectional.only(start: 16.0, end: 24.0);
+const EdgeInsetsGeometry _kUnalignedMenuMargin = EdgeInsetsDirectional.only(start: 16.0, end: 24.0);
 
 /// *[_kAlignedMenuMargin] which is dropdown item's default margin for align rule.
 
@@ -33,11 +32,7 @@ class _DropdownMenuPainter extends CustomPainter {
     this.elevation,
     this.selectedIndex,
     this.resize,
-  })  : _painter = BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(5),
-                boxShadow: kElevationToShadow[elevation!])
-            .createBoxPainter(),
+  })  : _painter = BoxDecoration(color: color, borderRadius: BorderRadius.circular(5), boxShadow: kElevationToShadow[elevation!]).createBoxPainter(),
         super(repaint: resize);
 
   final Color? color;
@@ -62,31 +57,25 @@ class _DropdownMenuPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final double selectedItemOffset =
-        selectedIndex! * _kMenuItemHeight + kMaterialListPadding.top;
+    final double selectedItemOffset = selectedIndex! * _kMenuItemHeight + kMaterialListPadding.top;
     final Tween<double> top = Tween<double>(
       begin: selectedItemOffset.clamp(0.0, size.height - _kMenuItemHeight),
       end: 0.0,
     );
 
     final Tween<double> bottom = Tween<double>(
-      begin:
-          (top.begin! + _kMenuItemHeight).clamp(_kMenuItemHeight, size.height),
+      begin: (top.begin! + _kMenuItemHeight).clamp(_kMenuItemHeight, size.height),
       end: size.height,
     );
 
-    final Rect rect = Rect.fromLTRB(
-        0.0, top.evaluate(resize!), size.width, bottom.evaluate(resize!));
+    final Rect rect = Rect.fromLTRB(0.0, top.evaluate(resize!), size.width, bottom.evaluate(resize!));
 
     _painter.paint(canvas, rect.topLeft, ImageConfiguration(size: rect.size));
   }
 
   @override
   bool shouldRepaint(_DropdownMenuPainter oldPainter) {
-    return oldPainter.color != color ||
-        oldPainter.elevation != elevation ||
-        oldPainter.selectedIndex != selectedIndex ||
-        oldPainter.resize != resize;
+    return oldPainter.color != color || oldPainter.elevation != elevation || oldPainter.selectedIndex != selectedIndex || oldPainter.resize != resize;
   }
 }
 
@@ -94,17 +83,13 @@ class _DropdownScrollBehavior extends ScrollBehavior {
   const _DropdownScrollBehavior();
 
   @override
-  TargetPlatform getPlatform(BuildContext context) =>
-      Theme.of(context).platform;
+  TargetPlatform getPlatform(BuildContext context) => Theme.of(context).platform;
 
   @override
-  Widget buildViewportChrome(
-          BuildContext context, Widget child, AxisDirection axisDirection) =>
-      child;
+  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) => child;
 
   @override
-  ScrollPhysics getScrollPhysics(BuildContext context) =>
-      const ClampingScrollPhysics();
+  ScrollPhysics getScrollPhysics(BuildContext context) => const ClampingScrollPhysics();
 }
 
 class _DropdownMenu<T> extends StatefulWidget {
@@ -145,21 +130,18 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
+    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
     final _DropdownRoute<T> route = widget.route!;
     final double unit = 0.5 / (route.items!.length + 1.5);
     final List<Widget> children = <Widget>[];
     for (int itemIndex = 0; itemIndex < route.items!.length; ++itemIndex) {
       CurvedAnimation opacity;
       if (itemIndex == route.selectedIndex) {
-        opacity =
-            CurvedAnimation(parent: route.animation!, curve: Threshold(0.0));
+        opacity = CurvedAnimation(parent: route.animation!, curve: Threshold(0.0));
       } else {
         final double start = (0.5 + (itemIndex + 1) * unit).clamp(0.0, 1.0);
         final double end = (start + 1.5 * unit).clamp(0.0, 1.0);
-        opacity = CurvedAnimation(
-            parent: route.animation!, curve: Interval(start, end));
+        opacity = CurvedAnimation(parent: route.animation!, curve: Interval(start, end));
       }
       children.add(FadeTransition(
         opacity: opacity,
@@ -235,8 +217,7 @@ class _DropdownMenuRouteLayout<T> extends SingleChildLayoutDelegate {
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
-    final double maxHeight =
-        math.max(0.0, constraints.maxHeight - 2 * _kMenuItemHeight);
+    final double maxHeight = math.max(0.0, constraints.maxHeight - 2 * _kMenuItemHeight);
     return BoxConstraints(
       minWidth: itemWidth!,
       maxWidth: itemWidth!,
@@ -341,20 +322,16 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
   final double? itemWidth;
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
     assert(debugCheckHasDirectionality(context));
     final double screenHeight = MediaQuery.of(context).size.height;
     final double maxMenuHeight = screenHeight - 2.0 * _kMenuItemHeight;
-    final double preferredMenuHeight =
-        (items!.length * _kMenuItemHeight) + kMaterialListPadding.vertical;
+    final double preferredMenuHeight = (items!.length * _kMenuItemHeight) + kMaterialListPadding.vertical;
     final double menuHeight = math.min(maxMenuHeight, preferredMenuHeight);
 
     final double buttonTop = buttonRect!.top;
-    final double selectedItemOffset =
-        selectedIndex! * _kMenuItemHeight + kMaterialListPadding.top;
-    double menuTop = (buttonTop - selectedItemOffset) -
-        (_kMenuItemHeight - buttonRect!.height) / 2.0;
+    final double selectedItemOffset = selectedIndex! * _kMenuItemHeight + kMaterialListPadding.top;
+    double menuTop = (buttonTop - selectedItemOffset) - (_kMenuItemHeight - buttonRect!.height) / 2.0;
     const double topPreferredLimit = _kMenuItemHeight;
     if (menuTop < topPreferredLimit) {
       menuTop = math.min(buttonTop, topPreferredLimit);
@@ -422,16 +399,13 @@ class DropdownBelow<T> extends StatefulWidget {
       this.boxPadding,
       this.boxTextstyle,
       required this.onChanged,
+      this.onBoxStateChanged,
       this.boxDecoration,
       this.dropdownColor,
       this.elevation = 8,
       this.isDense = false,
       this.icon})
-      : assert(value == null ||
-            items
-                    .where((DropdownMenuItem<T> item) => item.value == value)
-                    .length ==
-                1),
+      : assert(value == null || items.where((DropdownMenuItem<T> item) => item.value == value).length == 1),
         super(key: key);
 
   final List<DropdownMenuItem<T>> items;
@@ -471,6 +445,7 @@ class DropdownBelow<T> extends StatefulWidget {
   /// default value that printed which has no touch to dropdown widget.
 
   final ValueChanged<T> onChanged;
+  final Function(bool)? onBoxStateChanged;
 
   /// click item then, function triggered
 
@@ -494,8 +469,7 @@ class DropdownBelow<T> extends StatefulWidget {
   _DropdownBelowState<T> createState() => _DropdownBelowState<T>();
 }
 
-class _DropdownBelowState<T> extends State<DropdownBelow<T>>
-    with WidgetsBindingObserver {
+class _DropdownBelowState<T> extends State<DropdownBelow<T>> with WidgetsBindingObserver {
   int? _selectedIndex;
   _DropdownRoute<T>? _dropdownRoute;
 
@@ -529,11 +503,7 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
   }
 
   void _updateSelectedIndex() {
-    assert(widget.value == null ||
-        widget.items
-                .where((DropdownMenuItem<T> item) => item.value == widget.value)
-                .length ==
-            1);
+    assert(widget.value == null || widget.items.where((DropdownMenuItem<T> item) => item.value == widget.value).length == 1);
     _selectedIndex = null;
     for (int itemIndex = 0; itemIndex < widget.items.length; itemIndex++) {
       if (widget.items[itemIndex].value == widget.value) {
@@ -547,10 +517,7 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
     final RenderBox itemBox = context.findRenderObject() as RenderBox;
     final Rect itemRect = itemBox.localToGlobal(Offset.zero) & itemBox.size;
     final TextDirection textDirection = Directionality.of(context);
-    final EdgeInsetsGeometry menuMargin =
-        ButtonTheme.of(context).alignedDropdown
-            ? _kAlignedMenuMargin
-            : _kUnalignedMenuMargin;
+    final EdgeInsetsGeometry menuMargin = ButtonTheme.of(context).alignedDropdown ? _kAlignedMenuMargin : _kUnalignedMenuMargin;
 
     assert(_dropdownRoute == null);
     _dropdownRoute = _DropdownRoute<T>(
@@ -565,10 +532,14 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     );
 
-    Navigator.push(context, _dropdownRoute!)
-        .then<void>((_DropdownRouteResult<T>? newValue) {
+    widget.onBoxStateChanged!(true);
+    Navigator.push(context, _dropdownRoute!).then<void>((_DropdownRouteResult<T>? newValue) {
       _dropdownRoute = null;
-      if (!mounted || newValue == null) return;
+      if (!mounted || newValue == null) {
+        widget.onBoxStateChanged!(false);
+        return;
+      }
+      widget.onBoxStateChanged!(false);
       widget.onChanged(newValue.result);
     });
   }
@@ -638,8 +609,7 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
 
     return Semantics(
       button: true,
-      child: GestureDetector(
-          onTap: _handleTap, behavior: HitTestBehavior.opaque, child: result),
+      child: GestureDetector(onTap: _handleTap, behavior: HitTestBehavior.opaque, child: result),
     );
   }
 }
