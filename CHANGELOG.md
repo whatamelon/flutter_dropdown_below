@@ -1,3 +1,7 @@
+## [1.0.3] - 2021-12-30
+
+* Fix nullable error which selected no value or cannot select value in IOS.
+
 ## [1.0.2] - 2021-12-07
 
 * Pull request https://github.com/whatamelon/flutter_dropdown_below/pull/10 this commit solving https://github.com/whatamelon/flutter_dropdown_below/issues/9 by @bhumitbelani

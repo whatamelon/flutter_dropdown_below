@@ -519,7 +519,6 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>> with WidgetsBinding
     final TextDirection textDirection = Directionality.of(context);
     final EdgeInsetsGeometry menuMargin = ButtonTheme.of(context).alignedDropdown ? _kAlignedMenuMargin : _kUnalignedMenuMargin;
 
-    assert(_dropdownRoute == null);
     _dropdownRoute = _DropdownRoute<T>(
       itemWidth: widget.itemWidth,
       items: widget.items,
@@ -532,14 +531,10 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>> with WidgetsBinding
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     );
 
-    widget.onBoxStateChanged!(true);
     Navigator.push(context, _dropdownRoute!).then<void>((_DropdownRouteResult<T>? newValue) {
-      _dropdownRoute = null;
       if (!mounted || newValue == null) {
-        widget.onBoxStateChanged!(false);
         return;
       }
-      widget.onBoxStateChanged!(false);
       widget.onChanged(newValue.result);
     });
   }
