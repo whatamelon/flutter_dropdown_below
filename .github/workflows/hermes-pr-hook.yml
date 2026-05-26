@@ -1,0 +1,47 @@
+name: Hermes PR Hook
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+      - converted_to_draft
+      - labeled
+      - unlabeled
+      - edited
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  notify-hermes:
+    if: ${{ github.event.pull_request.user.login == 'whatamelon' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Hermes through Slack mention
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.HERMES_PR_HOOK_SLACK_WEBHOOK }}
+          BOT_USER_ID: U0B61PJTTN0
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          ACTION: ${{ github.event.action }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          LABEL_NAME: ${{ github.event.label.name || '' }}
+        shell: bash
+        run: |
+          if [[ -z "$SLACK_WEBHOOK_URL" ]]; then
+            echo "Missing secret HERMES_PR_HOOK_SLACK_WEBHOOK; skipping Hermes notification" >&2
+            exit 0
+          fi
+          TEXT="<@$BOT_USER_ID> github-pr-hook $REPO#$PR_NUMBER action=$ACTION sha=$HEAD_SHA label=$LABEL_NAME url=$PR_URL
+$PR_TITLE"
+          python3 - <<'PY' > /tmp/slack-payload.json
+import json, os
+print(json.dumps({"text": os.environ["TEXT"]}, ensure_ascii=False))
+PY
+          curl -fsS -X POST -H 'Content-Type: application/json' --data @/tmp/slack-payload.json "$SLACK_WEBHOOK_URL"
