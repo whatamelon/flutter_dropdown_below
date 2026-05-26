@@ -21,9 +21,10 @@ jobs:
     if: ${{ github.event.pull_request.user.login == 'whatamelon' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Notify Hermes through Slack mention
+      - name: Notify Hermes through Slack bot mention
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.HERMES_PR_HOOK_SLACK_WEBHOOK }}
+          SLACK_BOT_TOKEN: ${{ secrets.HERMES_PR_HOOK_SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: C0B5SNVFT99
           BOT_USER_ID: U0B61PJTTN0
           REPO: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -34,14 +35,14 @@ jobs:
           LABEL_NAME: ${{ github.event.label.name || '' }}
         shell: bash
         run: |
-          if [[ -z "$SLACK_WEBHOOK_URL" ]]; then
-            echo "Missing secret HERMES_PR_HOOK_SLACK_WEBHOOK; skipping Hermes notification" >&2
+          if [[ -z "$SLACK_BOT_TOKEN" ]]; then
+            echo "Missing secret HERMES_PR_HOOK_SLACK_BOT_TOKEN; skipping Hermes notification" >&2
             exit 0
           fi
           TEXT="<@$BOT_USER_ID> github-pr-hook $REPO#$PR_NUMBER action=$ACTION sha=$HEAD_SHA label=$LABEL_NAME url=$PR_URL
 $PR_TITLE"
           python3 - <<'PY' > /tmp/slack-payload.json
 import json, os
-print(json.dumps({"text": os.environ["TEXT"]}, ensure_ascii=False))
+print(json.dumps({"channel": os.environ["SLACK_CHANNEL"], "text": os.environ["TEXT"]}, ensure_ascii=False))
 PY
-          curl -fsS -X POST -H 'Content-Type: application/json' --data @/tmp/slack-payload.json "$SLACK_WEBHOOK_URL"
+          curl -fsS -X POST             -H "Authorization: Bearer $SLACK_BOT_TOKEN"             -H 'Content-Type: application/json; charset=utf-8'             --data @/tmp/slack-payload.json             https://slack.com/api/chat.postMessage
